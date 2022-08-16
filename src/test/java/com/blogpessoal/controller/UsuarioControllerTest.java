@@ -48,15 +48,16 @@ public class UsuarioControllerTest {
 	@DisplayName("Cadastrar Um Usuário")
 	public void deveCriarUmUsuário() {
 		
-		HttpEntity<Usuario> resposta = new HttpEntity<Usuario>(new Usuario(0L,
+		HttpEntity<Usuario> requisicao = new HttpEntity<Usuario>(new Usuario(0L,
 				"teste4", "url/foto04", "teste@teste4.com", "12345678"));
 		
-		ResponseEntity<Usuario> resposta1 = testRestTemplate.exchange("/usuarios/cadastrar", HttpMethod.POST, resposta, Usuario.class);
+		ResponseEntity<Usuario> respostas = testRestTemplate
+				.exchange("/usuarios/cadastrar", HttpMethod.POST, requisicao, Usuario.class);
 		
-		assertEquals(HttpStatus.CREATED, resposta.getBody());
-		assertEquals(resposta.getBody(). getNome(), resposta.getBody().getNome());
-		assertEquals(resposta.getBody(). getFoto(), resposta.getBody().getFoto());
-		assertEquals(resposta.getBody(). getUsuario(), resposta.getBody().getUsuario());
+		assertEquals(HttpStatus.CREATED, respostas.getStatusCode());
+		assertEquals(requisicao.getBody().getNome(), respostas.getBody().getNome());
+		assertEquals(requisicao.getBody().getFoto(), respostas.getBody().getFoto());
+		assertEquals(requisicao.getBody().getUsuario(), respostas.getBody().getUsuario());
 	}
 	
 	@Test
@@ -100,11 +101,15 @@ public class UsuarioControllerTest {
 	@DisplayName("Listar todos os Usuários")
 	public void deveMostarTodosUsuarios() {
 		
-		usuarioService.cadastrarUsuario(new Usuario(0L, "teste7", "Url/foto7", "teste@teste7.com", "teste12345678"));
+		usuarioService.cadastrarUsuario(new Usuario(0L, 
+				"teste7", "Url/foto7", "teste@teste7.com", "teste12345678"));
 		
-		usuarioService.cadastrarUsuario(new Usuario(0L, "teste8", "Url/foto8", "teste@teste8.com", "teste12345678"));
+		usuarioService.cadastrarUsuario(new Usuario(0L, 
+				"teste8", "Url/foto8", "teste@teste8.com", "teste12345678"));
 		
-		ResponseEntity<String> resposta = testRestTemplate.withBasicAuth("root", "root").exchange("/usuario/all", HttpMethod.GET, null, String.class);
+		ResponseEntity<String> resposta = testRestTemplate.withBasicAuth("root", "root")
+				.exchange("/usuarios/all", HttpMethod.GET, null, String.class);           
+		
 		
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 	}

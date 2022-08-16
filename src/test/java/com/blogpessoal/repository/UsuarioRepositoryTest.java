@@ -28,9 +28,9 @@ public class UsuarioRepositoryTest {
 	void start() {
 
 		usuarioRepository.deleteAll();
-		usuarioRepository.save(new Usuario(0L, "teste", "url/foto1", "teste@teste.com", "12345678"));
-		usuarioRepository.save(new Usuario(0L, "teste2", "url/foto2", "teste@teste2.com", "12345678"));
-		usuarioRepository.save(new Usuario(0L, "teste3", "url/foto3", "teste@teste3.com", "12345678"));
+		usuarioRepository.save(new Usuario(0L, "teste1 silva", "url/foto", "teste@teste.com", "12345678"));
+		usuarioRepository.save(new Usuario(0L, "teste2 silva", "url/foto2", "teste@teste2.com", "12345678"));
+		usuarioRepository.save(new Usuario(0L, "teste3 silva", "url/foto3", "teste@teste3.com", "12345678"));
 		usuarioRepository.save(new Usuario(0L, "teste4", "url/foto4", "teste@teste4.com", "12345678"));
 
 	}
@@ -46,10 +46,10 @@ public class UsuarioRepositoryTest {
 	@DisplayName("Retornar 3 usuarios")
 	public void deveRetornarTresUsuarios() {
 		
-		List<Usuario> listaDeUsuarios = usuarioRepository.findAllByNomeContainingIgnoreCase("teste");
+		List<Usuario> listaDeUsuarios = usuarioRepository.findAllByNomeContainingIgnoreCase("silva");
 		assertEquals(3, listaDeUsuarios.size());
-		assertTrue(listaDeUsuarios.get(0).getNome().equals("teste"));
-		assertTrue(listaDeUsuarios.get(1).getNome().equals("teste2"));
-		assertTrue(listaDeUsuarios.get(2).getNome().equals("teste3"));
+		assertTrue(listaDeUsuarios.get(0).getNome().equals("teste1 silva"));
+		assertTrue(listaDeUsuarios.get(1).getNome().equals("teste2 silva"));
+		assertTrue(listaDeUsuarios.get(2).getNome().equals("teste3 silva"));
 	}
 }
